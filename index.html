@@ -16,6 +16,8 @@
   --text-muted: #8b99a6;
   --glass-bg: rgba(18, 24, 29, 0.65);
   --glass-border: rgba(217, 155, 88, 0.15);
+  --pro-green: #4caf50;
+  --con-red: #d95858;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -218,10 +220,40 @@ input[type=range]::-webkit-slider-thumb {
 
 #mec-canvas { width: 100%; height: 350px; background: #080b0e; border: 1px solid rgba(255,255,255,0.02); }
 
+/* --- PROS AND CONS SECTION --- */
+.pros-cons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 40px;
+}
+.pc-box {
+  background: rgba(10, 13, 16, 0.8);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 4px;
+}
+.pc-pros { border-top: 2px solid var(--pro-green); }
+.pc-cons { border-top: 2px solid var(--con-red); }
+.pc-title {
+  font-family: 'Space Mono', monospace; font-size: 0.9rem;
+  color: #fff; margin-bottom: 15px; text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.pc-box ul { list-style: none; padding: 0; }
+.pc-box li {
+  font-size: 0.85rem; color: var(--text-muted);
+  margin-bottom: 12px; line-height: 1.6;
+  position: relative; padding-left: 20px;
+}
+.pc-pros li::before { content: '▶'; position: absolute; left: 0; color: var(--pro-green); font-size: 0.6rem; top: 4px; }
+.pc-cons li::before { content: '▶'; position: absolute; left: 0; color: var(--con-red); font-size: 0.6rem; top: 4px; }
+
+
 @media (max-width: 960px) {
   .hero { flex-direction: column; text-align: center; padding-top: 100px; }
   .student-info { text-align: left; }
-  .grid-3, .sim-layout { grid-template-columns: 1fr; }
+  .grid-3, .sim-layout, .pros-cons-grid { grid-template-columns: 1fr; }
   .hero-visual { width: 100%; height: 400px; margin-top: 40px; }
 }
 </style>
@@ -287,7 +319,7 @@ input[type=range]::-webkit-slider-thumb {
       
       <div class="control-group">
         <div class="control-label">Applied Voltage <span><span id="v-val">0.5</span>V</span></div>
-        <input type="range" id="v-slider" min="2" max="10" value="5" oninput="updateSim()">
+        <input type="range" id="v-slider" min="1" max="10" value="5" oninput="updateSim()">
       </div>
 
       <div class="control-group">
@@ -323,6 +355,20 @@ input[type=range]::-webkit-slider-thumb {
         <div class="stat"><div class="stat-val" id="s-power">0.6</div><div class="stat-lbl">Input (kWh/m³)</div></div>
         <div class="stat"><div class="stat-val" id="s-status" style="color:var(--golden-hour); font-size:1.5rem; line-height: 2.5rem;">Optimal</div><div class="stat-lbl">System State</div></div>
       </div>
+
+      <div class="pros-cons-grid">
+        <div class="pc-box pc-pros">
+          <div class="pc-title">System Advantages</div>
+          <ul id="list-pros">
+            </ul>
+        </div>
+        <div class="pc-box pc-cons">
+          <div class="pc-title">System Limitations</div>
+          <ul id="list-cons">
+            </ul>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -348,7 +394,7 @@ function initBg() {
   for(let i=0; i<25; i++) {
     bgMicrobes.push({
       x: Math.random() * bgWidth,
-      y: Math.random() * bgHeight * 2, // Spread out vertically
+      y: Math.random() * bgHeight * 2,
       size: Math.random() * 40 + 10,
       speedY: Math.random() * 0.3 + 0.1,
       parallax: Math.random() * 0.5 + 0.1,
@@ -367,17 +413,15 @@ window.addEventListener('scroll', () => { scrollY = window.scrollY; });
 function drawBg() {
   bgCtx.clearRect(0, 0, bgWidth, bgHeight);
   bgMicrobes.forEach(m => {
-    // Automatic drift + parallax scroll offset
     let currentY = m.y - (scrollY * m.parallax) - (Date.now() * 0.01 * m.speedY);
-    // Wrap around
     currentY = ((currentY % (bgHeight * 2)) + bgHeight * 2) % (bgHeight * 2) - bgHeight;
     
     bgCtx.save();
     bgCtx.translate(m.x, currentY);
     bgCtx.rotate(m.angle + Math.sin(Date.now()*0.001 * m.speedY));
     
-    bgCtx.fillStyle = `rgba(26, 74, 94, ${m.opacity})`; // Cinematic teal
-    bgCtx.filter = `blur(${m.size * 0.1}px)`; // Depth of field effect
+    bgCtx.fillStyle = `rgba(26, 74, 94, ${m.opacity})`;
+    bgCtx.filter = `blur(${m.size * 0.1}px)`;
     
     bgCtx.beginPath();
     if(m.type === 'rod') {
@@ -405,21 +449,18 @@ function drawHero() {
   const cx = w/2, cy = h/2;
   heroT += 0.02;
 
-  // React to scroll
   heroCanvas.style.transform = `translateY(${scrollY * 0.3}px) rotate(${scrollY * 0.05}deg)`;
 
   heroCtx.save();
   heroCtx.translate(cx, cy + Math.sin(heroT)*15);
   heroCtx.rotate(heroT * 0.2);
 
-  // Outer glow
   const grad = heroCtx.createRadialGradient(0,0, 50, 0,0, 180);
-  grad.addColorStop(0, 'rgba(217, 155, 88, 0.15)'); // Golden hour inner
-  grad.addColorStop(1, 'rgba(26, 74, 94, 0)');      // Teal outer
+  grad.addColorStop(0, 'rgba(217, 155, 88, 0.15)');
+  grad.addColorStop(1, 'rgba(26, 74, 94, 0)');
   heroCtx.fillStyle = grad;
   heroCtx.beginPath(); heroCtx.arc(0,0, 180, 0, Math.PI*2); heroCtx.fill();
 
-  // Microbe body (Rod shape)
   heroCtx.fillStyle = 'rgba(10, 20, 25, 0.8)';
   heroCtx.strokeStyle = 'rgba(217, 155, 88, 0.8)';
   heroCtx.lineWidth = 2;
@@ -427,7 +468,6 @@ function drawHero() {
   heroCtx.roundRect(-100, -50, 200, 100, 50);
   heroCtx.fill(); heroCtx.stroke();
 
-  // Internal structures
   for(let i=0; i<3; i++) {
     heroCtx.beginPath();
     heroCtx.arc(-40 + i*40, Math.sin(heroT + i)*10, 15, 0, Math.PI*2);
@@ -435,7 +475,6 @@ function drawHero() {
     heroCtx.fill();
   }
 
-  // Flagella (Cilia) reacting to movement
   heroCtx.strokeStyle = 'rgba(217, 155, 88, 0.4)';
   heroCtx.lineWidth = 1;
   for(let i=0; i<16; i++) {
@@ -456,7 +495,7 @@ function drawHero() {
 }
 drawHero();
 
-// --- SIMULATOR LOGIC ---
+// --- SIMULATOR LOGIC & DYNAMIC PROS/CONS ---
 function setChip(el, group) {
   document.querySelectorAll(`#${group}-chips .chip`).forEach(c => c.classList.remove('active'));
   el.classList.add('active');
@@ -465,8 +504,11 @@ function setChip(el, group) {
 
 function updateSim() {
   const v = document.getElementById('v-slider').value / 10;
-  const t = document.getElementById('t-slider').value;
-  document.getElementById('v-val').innerText = v;
+  const t = parseInt(document.getElementById('t-slider').value);
+  const bac = document.querySelector('#bac-chips .chip.active').innerText;
+  const sub = document.querySelector('#sub-chips .chip.active').innerText;
+
+  document.getElementById('v-val').innerText = v.toFixed(1);
   document.getElementById('t-val').innerText = t;
 
   let h2 = (2.0 + (v * 1.5) * (t==35 ? 1 : 0.8)).toFixed(2);
@@ -478,6 +520,55 @@ function updateSim() {
   document.getElementById('s-ce').innerText = ce + '%';
   document.getElementById('s-power').innerText = pow;
   document.getElementById('s-status').innerText = state;
+
+  // Generate Dynamic Pros and Cons
+  let pros = [];
+  let cons = [];
+
+  // Voltage logic
+  if(v < 0.3) {
+    cons.push(`Applied voltage (${v.toFixed(1)}V) is too low to efficiently overcome the thermodynamic barrier for H₂ synthesis.`);
+  } else if(v >= 0.3 && v <= 0.8) {
+    pros.push(`Optimal ${v.toFixed(1)}V boost ensures high energy efficiency, letting bacteria perform most of the work.`);
+  } else {
+    pros.push(`High voltage (${v.toFixed(1)}V) drives very rapid and high-volume hydrogen production.`);
+    cons.push("High grid dependency reduces the overall 'green' sustainability factor of the system.");
+  }
+
+  // Temperature logic
+  if(t < 40) {
+    pros.push(`Mesophilic (${t}°C) conditions provide a highly stable microbial community with minimal external heating costs.`);
+  } else {
+    pros.push(`Thermophilic (${t}°C) conditions significantly accelerate reaction kinetics and pathogen destruction.`);
+    cons.push(`High external heating requirement to maintain ${t}°C reduces net energy gain.`);
+  }
+
+  // Bacteria logic
+  if(bac.includes('sulfurreducens')) {
+    pros.push("Geobacter provides excellent, highly efficient direct electron transfer directly to the anode.");
+    cons.push("Requires strictly controlled pure cultures, increasing operational complexity.");
+  } else if(bac.includes('oneidensis')) {
+    pros.push("Shewanella is highly versatile, utilizing both direct contact and secreted mediator compounds.");
+    cons.push("Peak current density is generally lower compared to Geobacter species.");
+  } else {
+    pros.push("A mixed consortium is highly robust and resilient against environmental shocks or contamination.");
+    cons.push("Complex microbial competition can sometimes lead to lower overall H₂ yield.");
+  }
+
+  // Substrate logic
+  if(sub === 'Acetate') {
+    pros.push("Easily digestible simple substrate yields maximum possible coulombic efficiency.");
+  } else if(sub === 'Wastewater') {
+    pros.push("Dual-benefit profile: Treats industrial/domestic waste while simultaneously generating sustainable energy.");
+    cons.push("Complex organic structures require a longer retention time to break down fully.");
+  } else {
+    pros.push("Lignocellulosic biomass is highly abundant, cheap, and presents a massive carbon-neutral feedstock.");
+    cons.push("Requires significant and costly pre-treatment to make the organics bio-available for the bacteria.");
+  }
+
+  // Inject into DOM
+  document.getElementById('list-pros').innerHTML = pros.map(p => `<li>${p}</li>`).join('');
+  document.getElementById('list-cons').innerHTML = cons.map(c => `<li>${c}</li>`).join('');
 }
 
 // --- MEC CANVAS DRAWING ---
@@ -491,38 +582,31 @@ function drawMec() {
   mCtx.clearRect(0,0,w,h);
   mT += 0.05;
 
-  // Chambers
-  mCtx.fillStyle = 'rgba(26, 74, 94, 0.1)'; mCtx.fillRect(w*0.1, h*0.2, w*0.35, h*0.7); // Anode liquid
-  mCtx.fillStyle = 'rgba(217, 155, 88, 0.05)'; mCtx.fillRect(w*0.55, h*0.2, w*0.35, h*0.7); // Cathode liquid
+  mCtx.fillStyle = 'rgba(26, 74, 94, 0.1)'; mCtx.fillRect(w*0.1, h*0.2, w*0.35, h*0.7); 
+  mCtx.fillStyle = 'rgba(217, 155, 88, 0.05)'; mCtx.fillRect(w*0.55, h*0.2, w*0.35, h*0.7); 
 
-  // Electrodes
   mCtx.fillStyle = '#111'; mCtx.strokeStyle = 'var(--text-muted)'; mCtx.lineWidth=2;
   mCtx.fillRect(w*0.2, h*0.3, 20, h*0.5); mCtx.strokeRect(w*0.2, h*0.3, 20, h*0.5);
   mCtx.fillRect(w*0.75, h*0.3, 20, h*0.5); mCtx.strokeRect(w*0.75, h*0.3, 20, h*0.5);
 
-  // Membrane
   mCtx.strokeStyle = 'var(--golden-hour)'; mCtx.setLineDash([5,5]);
   mCtx.beginPath(); mCtx.moveTo(w*0.5, h*0.2); mCtx.lineTo(w*0.5, h*0.9); mCtx.stroke();
   mCtx.setLineDash([]);
 
-  // Circuit Wire
   mCtx.strokeStyle = 'rgba(255,255,255,0.2)'; mCtx.lineWidth = 2;
   mCtx.beginPath(); mCtx.moveTo(w*0.21, h*0.3); mCtx.lineTo(w*0.21, h*0.1); 
   mCtx.lineTo(w*0.76, h*0.1); mCtx.lineTo(w*0.76, h*0.3); mCtx.stroke();
 
-  // Electrons moving
   let eX = w*0.21 + ((mT*10) % (w*0.55));
   mCtx.fillStyle = 'var(--golden-hour)';
   mCtx.beginPath(); mCtx.arc(eX, h*0.1, 4, 0, Math.PI*2); mCtx.fill();
 
-  // H2 Bubbles at cathode
   mCtx.fillStyle = 'rgba(217, 155, 88, 0.6)';
   for(let i=0; i<5; i++) {
     let bY = h*0.8 - ((mT*15 + i*20) % (h*0.6));
     mCtx.beginPath(); mCtx.arc(w*0.76 + Math.sin(mT+i)*5, bY, 3+i, 0, Math.PI*2); mCtx.fill();
   }
 
-  // Text
   mCtx.fillStyle = 'var(--text-muted)'; mCtx.font = '12px Space Mono';
   mCtx.fillText("ANODE (Oxidation)", w*0.1, h*0.95);
   mCtx.fillText("CATHODE (Reduction)", w*0.6, h*0.95);
@@ -532,6 +616,9 @@ function drawMec() {
   requestAnimationFrame(drawMec);
 }
 drawMec();
+
+// Initialize the simulator text on first load
+updateSim();
 
 </script>
 </body>
