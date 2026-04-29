@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Bluish-Green Underwater Theme */
   --bg-base: #021217;
   --bg-surface: #06262d;
   --cinematic-teal: #1a7a85;
@@ -19,165 +18,131 @@
   --glass-border: rgba(32, 178, 170, 0.25);
   --pro-green: #4caf50;
   --con-red: #ff6b6b;
+  --warn-amber: #ffb74d;
 }
-
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--bg-base); color: var(--text-main); overflow-x: hidden; }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg-base);
-  color: var(--text-main);
-  overflow-x: hidden;
-  position: relative;
-}
+/* PARTICLES */
+.underwater-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden; background: radial-gradient(circle at center, #06262d 0%, #021217 100%); }
+.polka-dot { position: absolute; background: var(--accent-light); border-radius: 50%; filter: blur(2px); animation: floatUp linear infinite; opacity: 0.6; }
+@keyframes floatUp { 0% { transform: translateY(100vh) translateX(0px) scale(1); opacity: 0; } 20% { opacity: 0.6; } 80% { opacity: 0.6; } 100% { transform: translateY(-20vh) translateX(30px) scale(1.2); opacity: 0; } }
 
-/* --- ZERO-LAG UNDERWATER POLKA-DOT BACTERIA --- */
-.underwater-bg {
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: 0; pointer-events: none; overflow: hidden;
-  background: radial-gradient(circle at center, #06262d 0%, #021217 100%);
-}
-.polka-dot {
-  position: absolute;
-  background: var(--accent-light);
-  border-radius: 50%;
-  filter: blur(2px);
-  animation: floatUp linear infinite;
-  opacity: 0.6;
-}
-@keyframes floatUp {
-  0% { transform: translateY(100vh) translateX(0px) scale(1); opacity: 0; }
-  20% { opacity: 0.6; }
-  80% { opacity: 0.6; }
-  100% { transform: translateY(-20vh) translateX(30px) scale(1.2); opacity: 0; }
-}
-
-/* --- LAYOUTS --- */
+/* LAYOUTS */
 #landing, #simulator { position: relative; z-index: 10; }
-#simulator { display: none; padding: 40px 5%; }
+#simulator { display: none; padding: 30px 4%; }
 
-/* --- HERO SECTION --- */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8%;
-  position: relative;
-}
-.hero-content {
-  max-width: 600px;
-  z-index: 2;
-}
-.hero-tag {
-  font-family: 'Space Mono', monospace; font-size: 12px;
-  color: var(--accent-glow); letter-spacing: 2px; text-transform: uppercase;
-  margin-bottom: 20px; display: inline-block; border-bottom: 1px solid var(--accent-glow);
-  padding-bottom: 4px;
-}
-.hero-title {
-  font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 4.5rem);
-  font-weight: 700; line-height: 1.1; margin-bottom: 20px; color: #fff;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-.hero-subtitle {
-  font-family: 'Inter', sans-serif; font-weight: 300; font-size: 1.2rem;
-  color: var(--text-muted); margin-bottom: 40px; line-height: 1.6;
-}
-.student-info {
-  font-family: 'Space Mono', monospace; font-size: 0.85rem;
-  color: #fff; background: rgba(32, 178, 170, 0.15);
-  border-left: 3px solid var(--accent-glow); padding: 15px 20px;
-  margin-bottom: 40px; backdrop-filter: blur(5px);
-}
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 15px;
-  background: transparent; color: var(--accent-glow);
-  border: 1px solid var(--accent-glow); padding: 16px 32px;
-  font-family: 'Space Mono', monospace; font-size: 0.9rem;
-  letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
-  transition: all 0.4s ease; position: relative; overflow: hidden;
-}
-.btn-primary::before {
-  content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%;
-  background: var(--accent-glow); transition: width 0.4s ease; z-index: -1;
-}
+/* HERO */
+.hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding: 0 8%; position: relative; }
+.hero-content { max-width: 580px; z-index: 2; }
+.hero-tag { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--accent-glow); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: inline-block; border-bottom: 1px solid var(--accent-glow); padding-bottom: 4px; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.1; margin-bottom: 20px; color: #fff; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.hero-subtitle { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.7; }
+.student-info { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: #fff; background: rgba(32, 178, 170, 0.12); border-left: 3px solid var(--accent-glow); padding: 15px 20px; margin-bottom: 35px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 12px; background: transparent; color: var(--accent-glow); border: 1px solid var(--accent-glow); padding: 14px 28px; font-family: 'Space Mono', monospace; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; position: relative; overflow: hidden; }
+.btn-primary::before { content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: var(--accent-glow); transition: width 0.4s ease; z-index: -1; }
 .btn-primary:hover::before { width: 100%; }
 .btn-primary:hover { color: var(--bg-base); box-shadow: 0 0 20px var(--accent-light); }
+.hero-visual { width: 420px; height: 420px; position: relative; flex-shrink: 0; }
+#hero-microbe-canvas { width: 100%; height: 100%; }
 
-/* --- STATIC HERO CANVAS --- */
-.hero-visual {
-  width: 450px; height: 450px; position: relative;
-}
-#hero-microbe-canvas {
-  width: 100%; height: 100%;
-}
+/* PROCESS STEPS SECTION */
+.process-section { padding: 80px 8%; position: relative; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-header .tag { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent-glow); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; display: block; }
+.section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #fff; }
+.section-header p { color: var(--text-muted); margin-top: 10px; font-size: 0.95rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; }
 
-/* --- SIMULATOR CARDS --- */
-.glass-card {
-  background: var(--glass-bg); border: 1px solid var(--glass-border);
-  padding: 30px; border-radius: 8px; backdrop-filter: blur(10px);
-}
-.sim-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 30px; border-bottom: 1px solid var(--glass-border); padding-bottom: 20px;
-}
-.sim-layout { display: grid; grid-template-columns: 350px 1fr; gap: 40px; }
-.control-group { margin-bottom: 30px; }
-.control-label {
-  font-family: 'Space Mono', monospace; font-size: 0.8rem;
-  color: var(--text-muted); margin-bottom: 12px; display: flex; justify-content: space-between;
-}
-.control-label span { color: var(--accent-glow); }
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
+.steps-grid::before { content: ''; position: absolute; top: 60px; left: 16.6%; right: 16.6%; height: 2px; background: linear-gradient(90deg, var(--accent-glow), rgba(32,178,170,0.3), var(--accent-glow)); z-index: 0; }
+
+.step-card { background: rgba(6, 38, 45, 0.6); border: 1px solid var(--glass-border); padding: 30px 25px; position: relative; transition: all 0.3s; }
+.step-card:first-child { border-radius: 8px 0 0 8px; border-right: none; }
+.step-card:last-child { border-radius: 0 8px 8px 0; border-left: none; }
+.step-card:hover { background: rgba(32, 178, 170, 0.08); transform: translateY(-4px); }
+
+.step-number { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent-glow); letter-spacing: 2px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+.step-number::after { content: ''; flex: 1; height: 1px; background: rgba(32,178,170,0.3); }
+.step-icon { font-size: 2rem; margin-bottom: 15px; }
+.step-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; margin-bottom: 15px; }
+.step-items { list-style: none; }
+.step-items li { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; padding-left: 16px; position: relative; }
+.step-items li::before { content: '▸'; position: absolute; left: 0; color: var(--accent-glow); font-size: 0.7rem; top: 3px; }
+.step-items li strong { color: #c8e6e4; font-weight: 600; }
+.step-items li .formula { font-family: 'Space Mono', monospace; color: var(--accent-glow); font-size: 0.8rem; background: rgba(32,178,170,0.1); padding: 2px 6px; border-radius: 3px; display: inline-block; margin-top: 4px; }
+
+.aspen-summary { margin-top: 40px; background: linear-gradient(135deg, rgba(32,178,170,0.08), rgba(6,38,45,0.9)); border: 1px solid rgba(32,178,170,0.4); border-radius: 8px; padding: 25px 30px; display: flex; align-items: flex-start; gap: 20px; }
+.aspen-badge { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--bg-base); background: var(--accent-glow); padding: 6px 10px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+.aspen-summary p { font-size: 0.88rem; line-height: 1.65; color: #c8e6e4; }
+.aspen-summary p strong { color: var(--accent-glow); font-family: 'Space Mono', monospace; font-size: 0.82rem; }
+
+/* SIMULATOR */
+.glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 25px; border-radius: 8px; backdrop-filter: blur(10px); }
+.sim-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--glass-border); padding-bottom: 18px; }
+.sim-layout { display: grid; grid-template-columns: 300px 1fr; gap: 30px; }
+.control-group { margin-bottom: 25px; }
+.control-label { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; display: flex; justify-content: space-between; }
+.control-label span { color: var(--accent-glow); font-weight: 700; }
 
 input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
-input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; background: rgba(255,255,255,0.1); }
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none; height: 18px; width: 18px;
-  border-radius: 50%; background: var(--accent-glow);
-  margin-top: -8px; cursor: pointer; box-shadow: 0 0 10px var(--accent-light);
-}
+input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--accent-glow); margin-top: -7px; cursor: pointer; box-shadow: 0 0 8px var(--accent-light); }
 
-.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip {
-  font-family: 'Space Mono', monospace; font-size: 0.75rem;
-  padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); border-radius: 20px;
-  color: var(--text-muted); cursor: pointer; transition: all 0.3s;
-}
+/* Optimal range indicator */
+.range-wrapper { position: relative; padding-bottom: 6px; }
+.range-hint { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text-muted); display: flex; justify-content: space-between; margin-top: 4px; }
+.optimal-zone { position: absolute; bottom: 6px; height: 2px; background: rgba(76, 175, 80, 0.5); pointer-events: none; border-radius: 2px; }
+
+.chip-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-family: 'Space Mono', monospace; font-size: 0.72rem; padding: 7px 12px; border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; color: var(--text-muted); cursor: pointer; transition: all 0.3s; }
 .chip.active { border-color: var(--accent-glow); color: var(--accent-glow); background: rgba(32, 178, 170, 0.1); }
 
-/* --- STATS & VIZ --- */
-.viz-container { background: #031418; border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 8px; }
-.viz-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; margin-bottom: 30px;}
-.stat { text-align: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02);}
-.stat-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 5px; }
-.stat-lbl { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+/* VIZ AREA */
+.viz-right { display: flex; flex-direction: column; gap: 20px; }
+.viz-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.stat { text-align: center; background: rgba(0,0,0,0.25); padding: 14px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04); }
+.stat-val { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #fff; margin-bottom: 4px; }
+.stat-lbl { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; }
 
-/* --- PROS / CONS / THEORY --- */
-.pros-cons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-.pc-box { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; }
+/* ANIMATED MEC DIAGRAM */
+.mec-demo { background: #031418; border: 1px solid rgba(32,178,170,0.15); border-radius: 8px; padding: 20px; }
+.mec-demo-title { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent-glow); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+.mec-demo-title::before { content: ''; width: 8px; height: 8px; background: var(--accent-glow); border-radius: 50%; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+#mec-canvas { width: 100%; height: 190px; display: block; border-radius: 4px; }
+
+/* WHY explanation box */
+.why-box { background: rgba(255, 183, 77, 0.06); border: 1px solid rgba(255, 183, 77, 0.25); border-radius: 8px; padding: 16px 20px; font-size: 0.82rem; line-height: 1.6; color: #e0d4b0; }
+.why-box .why-title { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--warn-amber); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+#why-text { color: #d4c9a0; }
+
+/* PROS/CONS */
+.pros-cons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.pc-box { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 18px; border-radius: 8px; }
 .pc-pros { border-top: 2px solid var(--pro-green); }
 .pc-cons { border-top: 2px solid var(--con-red); }
-.pc-title { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: #fff; margin-bottom: 12px; text-transform: uppercase; }
-.pc-box ul { list-style: none; padding: 0; }
-.pc-box li { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; position: relative; padding-left: 18px; }
-.pc-pros li::before { content: '▶'; position: absolute; left: 0; color: var(--pro-green); font-size: 0.6rem; top: 4px; }
-.pc-cons li::before { content: '▶'; position: absolute; left: 0; color: var(--con-red); font-size: 0.6rem; top: 4px; }
+.pc-title { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: #fff; margin-bottom: 10px; text-transform: uppercase; }
+.pc-box ul { list-style: none; }
+.pc-box li { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5; position: relative; padding-left: 16px; }
+.pc-pros li::before { content: '▶'; position: absolute; left: 0; color: var(--pro-green); font-size: 0.55rem; top: 4px; }
+.pc-cons li::before { content: '▶'; position: absolute; left: 0; color: var(--con-red); font-size: 0.55rem; top: 4px; }
 
-.theory-box {
-  background: linear-gradient(135deg, rgba(6, 38, 45, 0.9), rgba(2, 18, 23, 0.9));
-  border: 1px solid var(--accent-glow); padding: 25px; border-radius: 8px;
-}
-.theory-box h3 { color: var(--accent-glow); font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; }
-.theory-box p { font-size: 0.9rem; line-height: 1.6; color: #e0f2f1; margin-bottom: 10px; }
-.theory-box strong { color: #fff; font-family: 'Space Mono', monospace; font-size: 0.85rem;}
+/* THEORY BOX */
+.theory-box { background: linear-gradient(135deg, rgba(6,38,45,0.9), rgba(2,18,23,0.9)); border: 1px solid var(--accent-glow); padding: 20px; border-radius: 8px; }
+.theory-box h3 { color: var(--accent-glow); font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 12px; }
+.theory-box p { font-size: 0.82rem; line-height: 1.65; color: #e0f2f1; margin-bottom: 8px; }
+.theory-box strong { color: #fff; font-family: 'Space Mono', monospace; font-size: 0.78rem; }
 
 @media (max-width: 960px) {
   .hero { flex-direction: column; text-align: center; padding-top: 80px; }
-  .student-info { text-align: left; }
-  .sim-layout, .pros-cons-grid { grid-template-columns: 1fr; }
+  .hero-visual { width: 280px; height: 280px; }
+  .sim-layout { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .steps-grid::before { display: none; }
+  .step-card:first-child, .step-card:last-child { border-radius: 8px; border: 1px solid var(--glass-border); }
   .viz-stats { grid-template-columns: 1fr 1fr; }
+  .pros-cons-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -185,17 +150,19 @@ input[type=range]::-webkit-slider-thumb {
 
 <div class="underwater-bg" id="particles"></div>
 
+<!-- LANDING -->
 <div id="landing">
+
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
       <div class="hero-tag">Research & Simulation</div>
       <h1 class="hero-title">Bio-Electrolytic Hydrogen Synthesis</h1>
       <p class="hero-subtitle">Exploring the thermodynamics of Microbial Electrolysis Cells (MECs) to generate sustainable Bio-Hythane via electro-active biological methods.</p>
-      
       <div class="student-info">
-        <div><strong>Jacob mathew</strong><br>25BBT0086<br>Btech Biotechnology</div>
+        <strong>Jacob Mathew</strong><br>
+        25BBT0086 &nbsp;|&nbsp; B.Tech Biotechnology
       </div>
-
       <button class="btn-primary" onclick="toggleView('simulator')">
         Initialize Dashboard <span>→</span>
       </button>
@@ -204,56 +171,154 @@ input[type=range]::-webkit-slider-thumb {
       <canvas id="hero-microbe-canvas"></canvas>
     </div>
   </section>
+
+  <!-- HOW IT WORKS: 3-STEP PROCESS -->
+  <section class="process-section">
+    <div class="section-header">
+      <span class="tag">Mechanism</span>
+      <h2>How the MEC Process Works</h2>
+      <p>A Microbial Electrolysis Cell operates in three distinct stages — anodic oxidation, ion transfer, and cathodic reduction — to convert organic waste into pure hydrogen gas.</p>
+    </div>
+
+    <div class="steps-grid">
+
+      <!-- STEP 1 -->
+      <div class="step-card">
+        <div class="step-number">STEP 01</div>
+        <div class="step-icon">🧬</div>
+        <div class="step-title">The Feed & Anode<br><em style="font-size:0.9rem; color:var(--text-muted)">Oxidation</em></div>
+        <ul class="step-items">
+          <li><strong>Input:</strong> Organic waste (wastewater, acetate, food waste).</li>
+          <li><strong>Process:</strong> Electro-active bacteria (EAB) act as biocatalysts in a strictly <strong>anaerobic</strong> (oxygen-free) reactor — they digest the organic waste.</li>
+          <li><strong>Why anaerobic?</strong> Oxygen would quench the electrons before they reach the anode — the entire energy chain collapses.</li>
+          <li><strong>Outputs — 3 things released:</strong>
+            <span class="formula">CO₂ — vented as gas</span>
+            <span class="formula">H⁺ — protons swim in liquid</span>
+            <span class="formula">e⁻ — electrons → metal anode</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card">
+        <div class="step-number">STEP 02</div>
+        <div class="step-icon">⚡</div>
+        <div class="step-title">The Transfer<br><em style="font-size:0.9rem; color:var(--text-muted)">Membrane & Circuit</em></div>
+        <ul class="step-items">
+          <li><strong>Liquid Phase:</strong> H⁺ ions travel through a <strong>Proton Exchange Membrane (PEM)</strong> to reach the cathode side.</li>
+          <li><strong>Solid Phase:</strong> Electrons travel through an external wire to the cathode.</li>
+          <li><strong>The Energy Boost:</strong> An external voltage of <strong>0.2V–0.8V</strong> is applied to the wire.</li>
+          <li><strong>Why the boost?</strong> Bacterial oxidation alone cannot push electrons over the thermodynamic energy barrier. The small electrical nudge is thermodynamically required — but the bacteria supply most of the energy from the waste itself.</li>
+        </ul>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card">
+        <div class="step-number">STEP 03</div>
+        <div class="step-icon">🔴</div>
+        <div class="step-title">The Cathode<br><em style="font-size:0.9rem; color:var(--text-muted)">Reduction</em></div>
+        <ul class="step-items">
+          <li><strong>Process:</strong> Boosted electrons from the wire and swimming protons from the liquid <strong>reunite at the cathode</strong>.</li>
+          <li><strong>The Reaction:</strong>
+            <span class="formula">2H⁺ + 2e⁻ → H₂ ↑</span>
+          </li>
+          <li><strong>Output:</strong> Pure Hydrogen gas is generated and collected.</li>
+          <li><strong>Why H₂ specifically?</strong> The cathodic reduction of protons is thermodynamically favoured at low voltages — making MECs far more energy-efficient than conventional electrolysis.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ASPEN SUMMARY -->
+    <div class="aspen-summary">
+      <span class="aspen-badge">ASPEN SUMMARY</span>
+      <p>
+        To model this in Aspen Plus, we essentially need:
+        <strong> [1] Anodic reactor</strong> (yielding CO₂, H⁺, e⁻) →
+        <strong> [2] Membrane / separator</strong> (PEM ion transfer) →
+        <strong> [3] External work/power input block</strong> (0.2–0.8V applied voltage) →
+        <strong> [4] Cathodic reactor</strong> for the H₂ synthesis reaction
+        <em>(2H⁺ + 2e⁻ → H₂)</em>.
+      </p>
+    </div>
+
+  </section>
+
 </div>
 
+<!-- SIMULATOR -->
 <div id="simulator">
   <div class="sim-header">
-    <button class="btn-primary" style="padding: 10px 20px; font-size: 0.75rem;" onclick="toggleView('landing')">← Return</button>
-    <div style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff;">MEC Live Telemetry</div>
-    <div style="font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--accent-glow);">Jacob mathew | 25BBT0086</div>
+    <button class="btn-primary" style="padding: 10px 20px; font-size: 0.72rem;" onclick="toggleView('landing')">← Return</button>
+    <div style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #fff;">MEC Live Telemetry</div>
+    <div style="font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent-glow);">Jacob Mathew | 25BBT0086</div>
   </div>
 
   <div class="sim-layout">
+
+    <!-- CONTROLS -->
     <div class="glass-card">
-      
+
       <div class="control-group">
         <div class="control-label">External Voltage <span><span id="v-val">0.5</span>V</span></div>
-        <input type="range" id="v-slider" min="1" max="10" value="5" oninput="updateSim()">
+        <div class="range-wrapper">
+          <input type="range" id="v-slider" min="1" max="14" value="5" oninput="updateSim()">
+          <div class="range-hint"><span>0.1V</span><span style="color:var(--pro-green)">← Optimal: 0.2–0.8V →</span><span>1.4V</span></div>
+        </div>
       </div>
 
       <div class="control-group">
         <div class="control-label">Temperature <span><span id="t-val">35</span>°C</span></div>
-        <input type="range" id="t-slider" min="20" max="65" value="35" oninput="updateSim()">
+        <div class="range-wrapper">
+          <input type="range" id="t-slider" min="20" max="70" value="35" oninput="updateSim()">
+          <div class="range-hint"><span>20°C</span><span style="color:var(--pro-green)">← Optimal: 35–55°C →</span><span>70°C</span></div>
+        </div>
       </div>
 
       <div class="control-group">
         <div class="control-label" style="margin-bottom: 10px;">Bacterial Strain</div>
         <div class="chip-grid" id="bac-chips">
-          <div class="chip active" onclick="setChip(this, 'bac')">Clostridium sp.</div>
-          <div class="chip" onclick="setChip(this, 'bac')">Enterobacter</div>
-          <div class="chip" onclick="setChip(this, 'bac')">Thermoanaerobacter</div>
+          <div class="chip active" onclick="setChip(this,'bac')">Clostridium sp.</div>
+          <div class="chip" onclick="setChip(this,'bac')">Enterobacter</div>
+          <div class="chip" onclick="setChip(this,'bac')">Thermoanaerobacter</div>
         </div>
       </div>
 
       <div class="control-group">
         <div class="control-label" style="margin-bottom: 10px;">Substrate</div>
         <div class="chip-grid" id="sub-chips">
-          <div class="chip active" onclick="setChip(this, 'sub')">Food Waste</div>
-          <div class="chip" onclick="setChip(this, 'sub')">Cheese Whey</div>
-          <div class="chip" onclick="setChip(this, 'sub')">Wheat Straw</div>
+          <div class="chip active" onclick="setChip(this,'sub')">Food Waste</div>
+          <div class="chip" onclick="setChip(this,'sub')">Cheese Whey</div>
+          <div class="chip" onclick="setChip(this,'sub')">Wheat Straw</div>
         </div>
+      </div>
+
+      <!-- WHY IS IT CHANGING? -->
+      <div class="why-box">
+        <div class="why-title">🔬 Why Is It Changing?</div>
+        <div id="why-text">Adjust parameters to see the thermodynamic explanation.</div>
       </div>
 
     </div>
 
-    <div class="viz-container">
+    <!-- VIZ RIGHT -->
+    <div class="viz-right">
+
+      <!-- STATS -->
       <div class="viz-stats">
         <div class="stat"><div class="stat-val" id="s-h2">0</div><div class="stat-lbl">H₂ Yield (mL/g VS)</div></div>
         <div class="stat"><div class="stat-val" id="s-ce">0%</div><div class="stat-lbl">Coulombic Eff.</div></div>
         <div class="stat"><div class="stat-val" id="s-power">0.0</div><div class="stat-lbl">Input (kWh/m³)</div></div>
-        <div class="stat"><div class="stat-val" id="s-status" style="color:var(--accent-glow); font-size:1.4rem; line-height: 2.1rem;">Optimal</div><div class="stat-lbl">System State</div></div>
+        <div class="stat"><div class="stat-val" id="s-status" style="font-size:1.2rem; line-height:2.2rem; color:var(--accent-glow);">Optimal</div><div class="stat-lbl">System State</div></div>
       </div>
 
+      <!-- ANIMATED MEC DIAGRAM -->
+      <div class="mec-demo">
+        <div class="mec-demo-title">Live Bioreactor Simulation</div>
+        <canvas id="mec-canvas"></canvas>
+      </div>
+
+      <!-- PROS/CONS -->
       <div class="pros-cons-grid">
         <div class="pc-box pc-pros">
           <div class="pc-title">System Advantages</div>
@@ -265,10 +330,11 @@ input[type=range]::-webkit-slider-thumb {
         </div>
       </div>
 
+      <!-- THEORY BOX -->
       <div class="theory-box">
         <h3>Optimal Conditions & Thermodynamic Theory</h3>
-        <p><strong>Best Configuration:</strong> Thermophilic Temperature (55°C) • <em>Thermoanaerobacter</em> or <em>Clostridium</em> • Food Waste or Cheese Whey • Applied Voltage: 0.6V.</p>
-        <p><strong>Theoretical Basis:</strong> According to thermodynamic principles and the Van't Hoff equation, bio-hydrogen synthesis (e.g., converting glucose to acetate) is an <strong>endothermic reaction (ΔH° > 0)</strong>. Elevating the temperature to 55°C increases the equilibrium constant, shifting the system to heavily favor $H_2$ production. Thermophilic conditions maximize the activity of the <em>hydrogenase</em> enzyme while naturally suppressing non-spore-forming, hydrogen-consuming microbes (like methanogens). Applying an optimal 0.6V external boost provides exactly enough thermodynamic "push" to drive cathodic reduction without relying heavily on grid electricity, keeping the system green.</p>
+        <p><strong>Best Configuration:</strong> Thermophilic Temp (55°C) • <em>Thermoanaerobacter</em> or <em>Clostridium</em> • Food Waste or Cheese Whey • Applied Voltage: 0.6V.</p>
+        <p><strong>Theoretical Basis:</strong> Bio-hydrogen synthesis is an <strong>endothermic reaction (ΔH° &gt; 0)</strong>. By the Van't Hoff equation, raising temperature increases the equilibrium constant K, shifting the system to favour H₂ production — but only up to the point where enzyme denaturation kicks in (~65°C). Similarly, voltage has an optimal window: too low (below 0.2V) fails to overcome the thermodynamic barrier, while too high (above 0.8V) drains grid electricity and destroys the energy efficiency ratio.</p>
       </div>
 
     </div>
@@ -276,16 +342,16 @@ input[type=range]::-webkit-slider-thumb {
 </div>
 
 <script>
-// --- ZERO LAG CSS PARTICLES ---
+// --- PARTICLES ---
 const particleContainer = document.getElementById('particles');
-for(let i=0; i<30; i++) {
+for(let i=0; i<28; i++) {
   let p = document.createElement('div');
   p.classList.add('polka-dot');
-  p.style.width = (Math.random() * 20 + 5) + 'px';
+  p.style.width = (Math.random() * 18 + 5) + 'px';
   p.style.height = p.style.width;
   p.style.left = Math.random() * 100 + 'vw';
   p.style.animationDuration = (Math.random() * 15 + 10) + 's';
-  p.style.animationDelay = (Math.random() * 5) + 's';
+  p.style.animationDelay = (Math.random() * 8) + 's';
   particleContainer.appendChild(p);
 }
 
@@ -294,60 +360,49 @@ function toggleView(view) {
   document.getElementById('landing').style.display = view === 'landing' ? 'block' : 'none';
   document.getElementById('simulator').style.display = view === 'simulator' ? 'block' : 'none';
   window.scrollTo(0,0);
+  if(view === 'simulator') startMecAnimation();
 }
 
-// --- STATIC 3D HERO MICROBE CANVAS ---
+// --- HERO MICROBE CANVAS ---
 const heroCanvas = document.getElementById('hero-microbe-canvas');
 const heroCtx = heroCanvas.getContext('2d');
 let heroT = 0;
-
 function drawHero() {
   const w = heroCanvas.width = heroCanvas.offsetWidth;
   const h = heroCanvas.height = heroCanvas.offsetHeight;
-  heroCtx.clearRect(0, 0, w, h);
-  
+  heroCtx.clearRect(0,0,w,h);
   const cx = w/2, cy = h/2;
-  heroT += 0.015; // Slow, stationary pulse
-
+  heroT += 0.015;
   heroCtx.save();
-  heroCtx.translate(cx, cy + Math.sin(heroT)*10); // Gentle bob
+  heroCtx.translate(cx, cy + Math.sin(heroT)*10);
   heroCtx.rotate(heroT * 0.1);
-
-  // Outer glow
-  const grad = heroCtx.createRadialGradient(0,0, 40, 0,0, 160);
-  grad.addColorStop(0, 'rgba(32, 178, 170, 0.2)');
-  grad.addColorStop(1, 'rgba(6, 38, 45, 0)');
+  const grad = heroCtx.createRadialGradient(0,0,40,0,0,160);
+  grad.addColorStop(0,'rgba(32,178,170,0.2)');
+  grad.addColorStop(1,'rgba(6,38,45,0)');
   heroCtx.fillStyle = grad;
-  heroCtx.beginPath(); heroCtx.arc(0,0, 160, 0, Math.PI*2); heroCtx.fill();
-
-  // Microbe body 
+  heroCtx.beginPath(); heroCtx.arc(0,0,160,0,Math.PI*2); heroCtx.fill();
   heroCtx.fillStyle = '#031418';
-  heroCtx.strokeStyle = 'var(--accent-glow)';
+  heroCtx.strokeStyle = '#20b2aa';
   heroCtx.lineWidth = 2;
   heroCtx.beginPath();
-  heroCtx.roundRect(-90, -45, 180, 90, 45);
+  heroCtx.roundRect(-90,-45,180,90,45);
   heroCtx.fill(); heroCtx.stroke();
-
-  // Internal structures
-  for(let i=0; i<3; i++) {
+  for(let i=0;i<3;i++) {
     heroCtx.beginPath();
-    heroCtx.arc(-35 + i*35, Math.sin(heroT + i)*8, 12, 0, Math.PI*2);
-    heroCtx.fillStyle = `rgba(32, 178, 170, ${0.3 + i*0.2})`;
+    heroCtx.arc(-35+i*35, Math.sin(heroT+i)*8, 12, 0, Math.PI*2);
+    heroCtx.fillStyle = `rgba(32,178,170,${0.3+i*0.2})`;
     heroCtx.fill();
   }
-
-  // Cilia
-  heroCtx.strokeStyle = 'rgba(32, 178, 170, 0.5)';
+  heroCtx.strokeStyle = 'rgba(32,178,170,0.5)';
   heroCtx.lineWidth = 1;
-  for(let i=0; i<16; i++) {
-    let angle = (i/16) * Math.PI * 2;
-    let px = Math.cos(angle) * (Math.abs(Math.cos(angle))>0.6 ? 90 : 45);
-    let py = Math.sin(angle) * 45;
-    
-    heroCtx.beginPath(); heroCtx.moveTo(px, py);
-    let fx = px + Math.cos(angle + Math.sin(heroT+i)*0.5) * 40;
-    let fy = py + Math.sin(angle + Math.cos(heroT+i)*0.5) * 40;
-    heroCtx.quadraticCurveTo(px*1.2, py*1.2, fx, fy);
+  for(let i=0;i<16;i++) {
+    let angle = (i/16)*Math.PI*2;
+    let px = Math.cos(angle)*(Math.abs(Math.cos(angle))>0.6?90:45);
+    let py = Math.sin(angle)*45;
+    heroCtx.beginPath(); heroCtx.moveTo(px,py);
+    let fx = px + Math.cos(angle+Math.sin(heroT+i)*0.5)*38;
+    let fy = py + Math.sin(angle+Math.cos(heroT+i)*0.5)*38;
+    heroCtx.quadraticCurveTo(px*1.2,py*1.2,fx,fy);
     heroCtx.stroke();
   }
   heroCtx.restore();
@@ -355,7 +410,195 @@ function drawHero() {
 }
 drawHero();
 
-// --- REALISTIC SIMULATOR LOGIC BASED ON RESEARCH ---
+// --- ANIMATED MEC BIOREACTOR ---
+const mecCanvas = document.getElementById('mec-canvas');
+const mecCtx = mecCanvas.getContext('2d');
+
+let mecT = 0;
+let protons = [];
+let electrons = [];
+let h2Bubbles = [];
+let bacteria = [];
+let mecRunning = false;
+let mecYield = 300;
+let mecState = "Optimal";
+
+function initMecParticles() {
+  protons = [];
+  electrons = [];
+  h2Bubbles = [];
+  bacteria = [];
+  for(let i=0;i<5;i++) {
+    bacteria.push({ x: 60+Math.random()*80, y: 60+Math.random()*70, t: Math.random()*Math.PI*2, size: 8+Math.random()*6 });
+  }
+}
+
+function spawnProton(w,h) {
+  protons.push({ x: 180, y: 40+Math.random()*(h-80), progress: 0, speed: 0.005+Math.random()*0.005 });
+}
+function spawnElectron(w,h) {
+  electrons.push({ progress: 0, speed: 0.007+Math.random()*0.005 });
+}
+function spawnH2(w,h) {
+  h2Bubbles.push({ x: w*0.75+Math.random()*60, y: h-40, vy: -(0.4+Math.random()*0.3), r: 3+Math.random()*4, alpha: 0.9 });
+}
+
+function drawMec() {
+  if(!mecRunning) return;
+  const w = mecCanvas.width = mecCanvas.offsetWidth;
+  const h = mecCanvas.height = mecCanvas.offsetHeight;
+  mecCtx.clearRect(0,0,w,h);
+  mecT += 0.02;
+
+  // --- BACKGROUND ---
+  mecCtx.fillStyle = '#031418';
+  mecCtx.fillRect(0,0,w,h);
+
+  const memX = w*0.47;
+  const anodeX1 = 18, anodeX2 = memX-8;
+  const cathodeX1 = memX+8, cathodeX2 = w-18;
+  const chamberTop = 20, chamberBot = h-20;
+  const chamberH = chamberBot - chamberTop;
+
+  // Anode chamber
+  const anodeGrad = mecCtx.createLinearGradient(anodeX1,0,anodeX2,0);
+  anodeGrad.addColorStop(0,'rgba(6,38,45,0.9)'); anodeGrad.addColorStop(1,'rgba(32,178,170,0.05)');
+  mecCtx.fillStyle = anodeGrad;
+  mecCtx.strokeStyle = 'rgba(32,178,170,0.4)';
+  mecCtx.lineWidth = 1.5;
+  mecCtx.beginPath(); mecCtx.roundRect(anodeX1, chamberTop, anodeX2-anodeX1, chamberH, [8,0,0,8]); mecCtx.fill(); mecCtx.stroke();
+
+  // Cathode chamber
+  const cathGrad = mecCtx.createLinearGradient(cathodeX1,0,cathodeX2,0);
+  cathGrad.addColorStop(0,'rgba(32,178,170,0.05)'); cathGrad.addColorStop(1,'rgba(6,38,45,0.9)');
+  mecCtx.fillStyle = cathGrad;
+  mecCtx.strokeStyle = 'rgba(32,178,170,0.4)';
+  mecCtx.beginPath(); mecCtx.roundRect(cathodeX1, chamberTop, cathodeX2-cathodeX1, chamberH, [0,8,8,0]); mecCtx.fill(); mecCtx.stroke();
+
+  // Membrane
+  mecCtx.strokeStyle = 'rgba(255,183,77,0.7)';
+  mecCtx.lineWidth = 3;
+  mecCtx.setLineDash([6,4]);
+  mecCtx.beginPath(); mecCtx.moveTo(memX, chamberTop); mecCtx.lineTo(memX, chamberBot); mecCtx.stroke();
+  mecCtx.setLineDash([]);
+
+  // Labels
+  mecCtx.font = '600 10px Space Mono, monospace';
+  mecCtx.fillStyle = 'rgba(32,178,170,0.8)';
+  mecCtx.textAlign = 'center';
+  mecCtx.fillText('ANODE', (anodeX1+anodeX2)/2, chamberTop+13);
+  mecCtx.fillText('CATHODE', (cathodeX1+cathodeX2)/2, chamberTop+13);
+  mecCtx.fillStyle = 'rgba(255,183,77,0.8)';
+  mecCtx.fillText('PEM', memX, chamberTop-5);
+
+  // Bacteria
+  bacteria.forEach(b => {
+    b.t += 0.03;
+    b.x += Math.sin(b.t*0.7)*0.15;
+    b.y += Math.cos(b.t*0.5)*0.12;
+    b.x = Math.max(anodeX1+15, Math.min(anodeX2-15, b.x));
+    b.y = Math.max(chamberTop+20, Math.min(chamberBot-20, b.y));
+    mecCtx.save();
+    mecCtx.translate(b.x, b.y);
+    mecCtx.rotate(b.t*0.1);
+    mecCtx.fillStyle = '#031418';
+    mecCtx.strokeStyle = '#20b2aa';
+    mecCtx.lineWidth = 1.5;
+    mecCtx.beginPath(); mecCtx.roundRect(-b.size,-b.size/2,b.size*2,b.size,[b.size/2]); mecCtx.fill(); mecCtx.stroke();
+    mecCtx.fillStyle = 'rgba(32,178,170,0.5)';
+    mecCtx.beginPath(); mecCtx.arc(-b.size*0.3, Math.sin(b.t)*2, b.size*0.25, 0, Math.PI*2); mecCtx.fill();
+    mecCtx.beginPath(); mecCtx.arc(b.size*0.3, Math.sin(b.t+1)*2, b.size*0.2, 0, Math.PI*2); mecCtx.fill();
+    mecCtx.restore();
+    // CO2 bubbles
+    if(Math.random()<0.015) {
+      mecCtx.fillStyle = 'rgba(200,200,200,0.5)';
+      mecCtx.font = '8px monospace';
+      mecCtx.fillText('CO₂', b.x+Math.random()*20-10, b.y-b.size-3);
+    }
+  });
+
+  // Spawn particles
+  if(mecT % 1.2 < 0.022) spawnProton(w,h);
+  if(mecT % 1.5 < 0.022) spawnElectron(w,h);
+  if(mecT % 0.9 < 0.022 && mecYield > 80) spawnH2(w,h);
+
+  // PROTONS moving through membrane
+  protons = protons.filter(p => p.progress < 1);
+  protons.forEach(p => {
+    p.progress += p.speed * (mecYield/300);
+    let px = memX-10 + (p.progress * (cathodeX1 + 60 - (memX-10)));
+    mecCtx.beginPath(); mecCtx.arc(px, p.y, 5, 0, Math.PI*2);
+    mecCtx.fillStyle = `rgba(255,200,50,${0.9 - p.progress*0.3})`;
+    mecCtx.fill();
+    mecCtx.font = '7px monospace';
+    mecCtx.fillStyle = 'rgba(255,220,80,0.9)';
+    mecCtx.textAlign = 'center';
+    mecCtx.fillText('H⁺', px, p.y+3);
+  });
+
+  // ELECTRONS along arc (external circuit top)
+  const arcCenterX = w/2, arcTop = chamberTop - 18;
+  electrons = electrons.filter(e => e.progress < 1);
+  electrons.forEach(e => {
+    e.progress += e.speed * (mecYield/300);
+    let angle = Math.PI + e.progress * Math.PI;
+    let ex = arcCenterX + Math.cos(angle) * (w*0.35);
+    let ey = arcTop + Math.sin(angle) * 28;
+    mecCtx.beginPath(); mecCtx.arc(ex, ey, 4, 0, Math.PI*2);
+    mecCtx.fillStyle = `rgba(100,180,255,${0.9-e.progress*0.3})`;
+    mecCtx.fill();
+    mecCtx.font = '6px monospace';
+    mecCtx.fillStyle = 'rgba(130,200,255,0.9)';
+    mecCtx.textAlign = 'center';
+    mecCtx.fillText('e⁻', ex, ey+2.5);
+  });
+
+  // Arc wire
+  mecCtx.beginPath();
+  mecCtx.arc(arcCenterX, arcTop, w*0.35, Math.PI, 0);
+  mecCtx.strokeStyle = 'rgba(100,160,255,0.3)';
+  mecCtx.lineWidth = 1.5;
+  mecCtx.setLineDash([3,5]);
+  mecCtx.stroke();
+  mecCtx.setLineDash([]);
+
+  // Voltage label
+  mecCtx.fillStyle = 'rgba(100,160,255,0.8)';
+  mecCtx.font = '9px Space Mono, monospace';
+  mecCtx.textAlign = 'center';
+  mecCtx.fillText(document.getElementById('v-val').innerText + 'V applied', arcCenterX, arcTop-8);
+
+  // H2 Bubbles rising in cathode
+  h2Bubbles = h2Bubbles.filter(b => b.alpha > 0.05);
+  h2Bubbles.forEach(b => {
+    b.y += b.vy;
+    b.alpha *= 0.985;
+    b.x += Math.sin(mecT*2+b.r)*0.3;
+    mecCtx.beginPath(); mecCtx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+    mecCtx.strokeStyle = `rgba(32,178,170,${b.alpha})`;
+    mecCtx.fillStyle = `rgba(32,178,170,${b.alpha*0.3})`;
+    mecCtx.lineWidth = 1;
+    mecCtx.fill(); mecCtx.stroke();
+    mecCtx.fillStyle = `rgba(32,178,170,${b.alpha})`;
+    mecCtx.font = '7px monospace';
+    mecCtx.textAlign = 'center';
+    if(b.r > 5) mecCtx.fillText('H₂', b.x, b.y+2.5);
+  });
+
+  // State overlay
+  if(mecState !== "Optimal") {
+    mecCtx.fillStyle = 'rgba(255,107,107,0.08)';
+    mecCtx.fillRect(0,0,w,h);
+  }
+
+  requestAnimationFrame(drawMec);
+}
+
+function startMecAnimation() {
+  if(!mecRunning) { mecRunning = true; initMecParticles(); drawMec(); }
+}
+
+// --- SIMULATOR LOGIC ---
 function setChip(el, group) {
   document.querySelectorAll(`#${group}-chips .chip`).forEach(c => c.classList.remove('active'));
   el.classList.add('active');
@@ -363,7 +606,8 @@ function setChip(el, group) {
 }
 
 function updateSim() {
-  const v = document.getElementById('v-slider').value / 10;
+  const rawV = document.getElementById('v-slider').value;
+  const v = rawV / 10;
   const t = parseInt(document.getElementById('t-slider').value);
   const bac = document.querySelector('#bac-chips .chip.active').innerText;
   const sub = document.querySelector('#sub-chips .chip.active').innerText;
@@ -375,89 +619,119 @@ function updateSim() {
   let pros = [];
   let cons = [];
   let state = "Optimal";
+  let whyParts = [];
 
-  // Substrate Logic (Based on research paper data)
+  // --- SUBSTRATE ---
   if(sub === 'Food Waste') {
-    baseYield = 300; 
-    pros.push("Food Waste yields high H₂ (~300 mL/g VS) due to rich carbohydrates and lipids.");
-    cons.push("High lipid content can cause biomass flotation and rapid VFA accumulation.");
+    baseYield = 300;
+    pros.push("Food Waste yields high H₂ (~300 mL/g VS) due to rich, easily-fermentable carbohydrates and lipids.");
+    cons.push("High lipid content can cause biomass flotation and rapid VFA accumulation, crashing pH.");
+    whyParts.push("Food Waste is chosen as the <b>baseline substrate</b> because its rich carbohydrate matrix provides an optimal electron donor density for EAB.");
   } else if(sub === 'Cheese Whey') {
-    baseYield = 340; 
-    pros.push("Cheese Whey provides excellent yield due to high lactose fermentability.");
-    cons.push("WARNING: Low-alkaline substrate; extremely prone to rapid acidification (pH crash).");
-  } else { // Wheat Straw
-    baseYield = 135; 
-    pros.push("Wheat straw provides excellent C/N ratios and represents an abundant, cheap carbon sink.");
-    cons.push("Lignocellulosic structure is highly rigid; requires costly pre-treatment to biodegrade.");
+    baseYield = 340;
+    pros.push("Cheese Whey provides the highest raw yield (~340 mL/g VS) due to exceptionally high lactose fermentability.");
+    cons.push("WARNING: Low-alkalinity substrate; extremely prone to rapid acidification (pH crash) — requires pH buffering.");
+    whyParts.push("Cheese Whey's <b>high lactose content</b> makes it the most energy-dense substrate, but its natural acidity means the system needs active pH control to avoid a collapse.");
+  } else {
+    baseYield = 135;
+    pros.push("Wheat Straw provides good C/N ratios and is a low-cost, abundant agricultural carbon source.");
+    cons.push("Lignocellulosic structure is highly rigid — requires costly chemical/thermal pre-treatment to unlock carbohydrates.");
+    whyParts.push("Wheat Straw's yield is limited because the <b>cellulose-lignin matrix</b> is biologically resistant. Bacteria cannot easily break down lignocellulose without pre-treatment, so less carbon reaches the electron-donor pathway.");
   }
 
-  // Strain & Temp Logic
+  // --- TEMPERATURE ---
   let tempMultiplier = 1;
   if(bac === 'Thermoanaerobacter') {
     if(t < 50) {
-      tempMultiplier = 0.1; // Fails at low temps
-      state = "Cell Dormancy";
-      cons.push("Thermoanaerobacter is an extreme thermophile; fails at temperatures below 50°C.");
+      tempMultiplier = 0.08; state = "Cell Dormancy";
+      cons.push("Thermoanaerobacter is an extreme thermophile — below 50°C it becomes dormant and stops producing H₂ entirely.");
+      whyParts.push(`At ${t}°C, <b>Thermoanaerobacter</b>'s enzymes are folded into their inactive conformation. This organism evolved exclusively for high-temperature environments (55–70°C). It is <em>not</em> suppressed — it simply has not yet activated. Raising the temperature to 55°C+ will trigger full enzyme activity and a dramatic jump in yield.`);
+    } else if(t > 65) {
+      tempMultiplier = 0.6; state = "Heat Denaturation";
+      cons.push("Even thermophiles have a ceiling — above 65°C, enzyme (hydrogenase) begins to denature and the proton-reduction pathway degrades.");
+      whyParts.push(`At ${t}°C, even <b>Thermoanaerobacter</b>'s heat-stable hydrogenase begins to denature. The Van't Hoff relationship shows K keeps increasing, but enzyme concentration drops — the net yield falls.`);
     } else {
-      tempMultiplier = 1.3;
-      pros.push("Thermoanaerobacter at thermophilic temps shifts thermodynamics to yield near theoretical H₂ maximums.");
+      tempMultiplier = 1.35;
+      pros.push("Thermoanaerobacter at thermophilic temps (55°C) shifts thermodynamic equilibrium to near-theoretical H₂ maximums.");
+      whyParts.push(`At ${t}°C, by the <b>Van't Hoff equation</b>, the equilibrium constant K is maximized for this endothermic reaction. Thermoanaerobacter's hydrogenase is fully active, and competing methanogens (which consume H₂) are naturally suppressed at high temperatures.`);
     }
   } else if(bac === 'Enterobacter') {
     if(t > 45) {
-      tempMultiplier = 0.4;
-      state = "Heat Stress";
-      cons.push("Enterobacter is a mesophile; denatures and loses productivity at thermophilic temperatures.");
+      tempMultiplier = 0.35; state = "Heat Stress";
+      cons.push("Enterobacter is a mesophile — above 45°C its cellular proteins begin to denature and H₂ output collapses.");
+      whyParts.push(`<b>Enterobacter</b> is a mesophilic organism (optimal 30–37°C). At ${t}°C, heat stress triggers a heat-shock response that reallocates cellular energy away from H₂ production toward protein repair, dropping yield sharply.`);
+    } else if(t < 25) {
+      tempMultiplier = 0.55;
+      cons.push("Below 25°C, Enterobacter's metabolic rate drops significantly — slower electron transfer and lower yield.");
+      whyParts.push(`At ${t}°C, metabolic enzyme kinetics slow (Arrhenius rate law). <b>Enterobacter</b> at sub-optimal temperatures produces fewer electrons per unit time, reducing the current available for H₂ generation.`);
     } else {
-      tempMultiplier = 0.85; // Faster growth, slightly lower yield than Clostridium
-      pros.push("Enterobacter's facultative nature protects the system from traces of dissolved oxygen.");
+      tempMultiplier = 0.85;
+      pros.push("Enterobacter's facultative nature protects the system from trace O₂ — useful for less-controlled reactor conditions.");
+      whyParts.push(`<b>Enterobacter</b> operates well at ${t}°C but produces slightly lower H₂ than Clostridium due to its mixed fermentation pathways — some electrons are diverted to ethanol and organic acids rather than proton reduction.`);
     }
   } else { // Clostridium
-    if(t > 45) {
-      tempMultiplier = 1.15;
-      pros.push("Clostridium forms heat-resistant spores, thriving at 55°C while competing microbes die off.");
+    if(t > 60) {
+      tempMultiplier = 0.7; state = "Heat Stress";
+      cons.push("Above 60°C, even Clostridium's spore-forming advantage is offset by enzyme denaturation in vegetative cells.");
+      whyParts.push(`<b>Clostridium</b> spores survive at ${t}°C, but the active vegetative cells that produce H₂ begin to lyse. The population shifts toward dormant spores, causing yield to drop.`);
+    } else if(t > 45) {
+      tempMultiplier = 1.18;
+      pros.push("Clostridium forms heat-resistant endospores at 55°C, outcompeting and eliminating rival hydrogen-consuming microbes.");
+      whyParts.push(`At ${t}°C, <b>Clostridium</b>'s key advantage emerges: competitor organisms (methanogens, acetogens) die off, while Clostridium persists via endospore formation. This removes H₂-consuming organisms, so net yield rises — <em>even if individual cell output is unchanged.</em>`);
     } else {
       tempMultiplier = 1.0;
-      pros.push("Clostridium provides highly reliable, robust baseline H₂ production at mesophilic temperatures.");
+      pros.push("Clostridium provides reliable, robust baseline H₂ production at standard mesophilic temperatures.");
+      whyParts.push(`<b>Clostridium</b> at ${t}°C is in its standard mesophilic operating range — stable, predictable yield. Hydrogenase is active and the PFOR pathway is running at normal efficiency.`);
     }
   }
 
-  // Voltage Logic (Thermodynamic Boost)
+  // --- VOLTAGE (THE KEY EXPLANATION) ---
   let voltMultiplier = 1;
   if(v < 0.2) {
-    voltMultiplier = 0.2;
-    state = "Barrier Not Met";
-    cons.push(`Applied voltage (${v.toFixed(1)}V) cannot overcome the endothermic thermodynamic barrier.`);
+    voltMultiplier = 0.1; state = "Barrier Not Met";
+    cons.push(`At ${v.toFixed(1)}V, the applied potential cannot overcome the thermodynamic activation energy barrier (~0.14V theoretical minimum).`);
+    whyParts.push(`<b>Why is yield near zero?</b> The proton reduction reaction (2H⁺ + 2e⁻ → H₂) has a theoretical minimum voltage requirement of ~0.14V, but with real-world losses (overpotential) the practical minimum is ~0.2V. Below this threshold, electrons arriving at the cathode simply do not have enough energy to force the reduction — they are rejected and no H₂ forms. <em>This is NOT about "maximum is best" — it is about crossing a physical threshold.</em>`);
   } else if(v >= 0.2 && v <= 0.8) {
-    voltMultiplier = 1 + (v * 0.5);
-    pros.push(`Optimal ${v.toFixed(1)}V electrical boost cleanly forces proton reduction at the cathode.`);
-  } else {
-    voltMultiplier = 1.4;
+    voltMultiplier = 1 + (v - 0.2) * 0.6;
+    pros.push(`Optimal ${v.toFixed(1)}V electrical boost cleanly drives cathodic proton reduction — bacteria supply most energy from the substrate.`);
+    whyParts.push(`<b>Why does yield rise here?</b> In the 0.2–0.8V range, each incremental voltage increase provides more driving force (Gibbs free energy) for the cathodic reaction. More electrons are energetically capable of reducing H⁺ to H₂. The bacteria still supply the bulk of the energy from substrate oxidation — the voltage is just the thermodynamic "key" that unlocks the last step.`);
+  } else if(v > 0.8 && v <= 1.1) {
+    voltMultiplier = 1.36;
     state = "Grid Heavy";
-    pros.push(`High voltage (${v.toFixed(1)}V) forces massive H₂ evolution rates.`);
-    cons.push("System is consuming too much grid electricity, destroying the 'Green' efficiency rating.");
+    pros.push(`High voltage (${v.toFixed(1)}V) forces maximum H₂ evolution rate — useful for industrial throughput.`);
+    cons.push("Input energy cost exceeds the energy value of H₂ produced — system is no longer 'green' or economically viable.");
+    whyParts.push(`<b>Why is it flagged as Grid Heavy?</b> Above 0.8V, the cathode is already saturated — all available H⁺ ions are being reduced. Additional voltage brings no new yield increase, only wasted electrical energy (heat). The energy input now <em>exceeds</em> the H₂ energy output, making this less efficient than conventional electrolysis — defeating the entire purpose of the MEC.`);
+  } else {
+    voltMultiplier = 1.2;
+    state = "Grid Heavy";
+    cons.push(`At ${v.toFixed(1)}V, the system is running as a conventional electrolyzer — the biological advantage is entirely lost.`);
+    whyParts.push(`<b>Critical point:</b> MECs are designed to use biological electron donation to <em>reduce</em> the electrical input needed. At ${v.toFixed(1)}V, you are brute-forcing H₂ production with electricity alone. This is just water electrolysis at this point — the bacteria are being bypassed. The optimal range (0.2–0.8V) is where the synergy between biology and electrochemistry exists.`);
   }
 
-  // Final Calculations
-  let finalYield = (baseYield * tempMultiplier * voltMultiplier).toFixed(1);
-  let ce = Math.min(96, Math.round(65 + (v*20) + (tempMultiplier*10)));
-  let pow = (v * 1.4).toFixed(2);
-  
-  if (finalYield < 50) state = "System Failing";
+  // --- FINAL CALC ---
+  let finalYield = Math.max(5, (baseYield * tempMultiplier * voltMultiplier)).toFixed(0);
+  let ce = Math.min(96, Math.round(55 + (Math.min(v,0.8)/0.8)*25 + (tempMultiplier*10)));
+  let pow = v.toFixed(2);
+  if(finalYield < 40) state = "System Failing";
 
-  // Update UI
+  mecYield = parseFloat(finalYield);
+  mecState = state;
+
+  // UI Update
   document.getElementById('s-h2').innerText = finalYield;
   document.getElementById('s-ce').innerText = ce + '%';
   document.getElementById('s-power').innerText = pow;
-  document.getElementById('s-status').innerText = state;
-  document.getElementById('s-status').style.color = (state === "Optimal") ? "var(--pro-green)" : "var(--con-red)";
+  const stEl = document.getElementById('s-status');
+  stEl.innerText = state;
+  const stateColors = { "Optimal":"var(--pro-green)", "Grid Heavy":"var(--warn-amber)", "System Failing":"var(--con-red)", "Cell Dormancy":"var(--con-red)", "Heat Stress":"var(--con-red)", "Heat Denaturation":"var(--con-red)", "Barrier Not Met":"var(--con-red)" };
+  stEl.style.color = stateColors[state] || 'var(--accent-glow)';
 
   document.getElementById('list-pros').innerHTML = pros.map(p => `<li>${p}</li>`).join('');
   document.getElementById('list-cons').innerHTML = cons.map(c => `<li>${c}</li>`).join('');
+  document.getElementById('why-text').innerHTML = whyParts.join('<br><br>') || 'Adjust parameters above to see explanations.';
 }
 
-// Init
 updateSim();
-
 </script>
 </body>
 </html>
